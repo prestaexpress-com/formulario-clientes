@@ -406,17 +406,70 @@
     }
 
     @media print {
-      body { background: var(--cw); font-size: 10px; }
-      .btn-print { display: none; }
+      @page { size: A4 portrait; margin: 10mm; }
+
+      body { background: var(--cw); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .btn-print { display: none !important; }
+
       .page {
-        margin: 0; padding: 10mm 12mm;
-        box-shadow: none; border-radius: 0;
+        zoom: 0.66;
+        width: 100%;
         max-width: 100%;
-        page-break-after: always;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border-radius: 0;
+        page-break-after: auto;
+        break-after: auto;
       }
-      input, select, textarea { border-bottom: 1px solid var(--ct) !important; }
+      .page.break-before {
+        page-break-before: always;
+        break-before: page;
+      }
+
+      .row {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 10px !important;
+        margin-bottom: 9px;
+        align-items: flex-end !important;
+      }
+      .field {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        width: auto !important;
+        margin-bottom: 0;
+      }
+      .field.w2 { flex: 2 1 0 !important; }
+      .field.w3 { flex: 3 1 0 !important; }
+      .field.full { flex: 1 0 100% !important; }
+
+      .header-fields {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+      }
+
+      label { font-size: 8px; }
+
+      input[type="text"], input[type="date"], input[type="email"],
+      input[type="tel"], input[type="number"], select, textarea {
+        font-size: 11px;
+        padding: 4px 2px;
+        border: none !important;
+        border-bottom: 1.2px solid var(--ct) !important;
+        background: transparent !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        width: 100% !important;
+        min-width: 0 !important;
+      }
+
       .table-wrap { overflow: visible; }
-      table, .amount-table { min-width: 0; font-size: 9px; }
+      table, .amount-table { min-width: 0; }
+
+      .section-title, .subsection-title, .header,
+      .firma-section, .check-row, .radio-row,
+      table, thead, tr { break-inside: avoid; }
     }
   </style>
 </head>
@@ -722,7 +775,7 @@
   </div>
 </div>
 
-<div class="page">
+<div class="page break-before">
   <div class="header">
     <img src="https://i.ibb.co/sdBGQVfG/NUEVO-LOGO-COOPE.png" alt="Logo Coope">
     <div class="header-title">
